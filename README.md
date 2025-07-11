@@ -3,7 +3,7 @@
 ## 📋 Project Overview
 
 - **Type**: WEBAPP
-- **Tech Stack**: Next.js 15, TypeScript, SQLite, Prisma, Tailwind CSS, shadcn/ui
+- **Tech Stack**: Next.js 15, TypeScript, PostgreSQL (Cloud), Prisma, Tailwind CSS, shadcn/ui
 - **Status**: ACTIVE
 - **Live URL**: Coming soon
 - **Repository**: [hardik88t/project-manager](https://github.com/hardik88t/project-manager)
@@ -31,7 +31,7 @@ A modern, full-stack project management webapp designed to be the central hub fo
 
 - **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript
-- **Database**: SQLite + Prisma ORM
+- **Database**: PostgreSQL (Cloud) + Prisma ORM
 - **UI Components**: shadcn/ui + Tailwind CSS
 - **State Management**: Zustand
 - **Validation**: Zod
@@ -56,17 +56,25 @@ A modern, full-stack project management webapp designed to be the central hub fo
    npm install
    ```
 
-3. **Set up the database**
+3. **Set up environment variables**
    ```bash
-   npx prisma migrate dev
+   # Create .env file with your database URL
+   echo "DATABASE_URL=your_database_url_here" > .env
    ```
 
-4. **Start the development server**
+4. **Set up the database**
+   ```bash
+   npx prisma generate --no-engine
+   npx prisma db push
+   npm run db:seed
+   ```
+
+5. **Start the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 📊 Database Schema
@@ -99,24 +107,14 @@ A modern, full-stack project management webapp designed to be the central hub fo
 
 ## 🤖 AI Integration
 
-The database is designed for easy AI integration:
+The database is designed for easy AI integration with cloud PostgreSQL:
 
 ```bash
-# Check high-priority items
-sqlite3 prisma/dev.db "
-  SELECT p.name as project, pi.name as item, pi.type, pi.priority
-  FROM ProjectItem pi
-  JOIN Project p ON pi.projectId = p.id
-  WHERE pi.priority IN ('HIGH', 'URGENT')
-  AND pi.status = 'TODO';
-"
+# Use Prisma Studio to explore data
+npx prisma studio
 
-# Update item status
-sqlite3 prisma/dev.db "
-  UPDATE ProjectItem
-  SET status='IN_PROGRESS'
-  WHERE id='[item-id]';
-"
+# Or use direct database queries through Prisma Client
+# Check high-priority items programmatically
 ```
 
 ## 📝 Usage Examples
@@ -144,11 +142,14 @@ sqlite3 prisma/dev.db "
 
 ### Database Operations
 ```bash
-# Create new migration
-npx prisma migrate dev --name description
+# Generate Prisma Client
+npx prisma generate --no-engine
 
-# Reset database
-npx prisma migrate reset
+# Push schema changes
+npx prisma db push
+
+# Seed database
+npm run db:seed
 
 # View database
 npx prisma studio
