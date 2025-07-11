@@ -1,29 +1,24 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Plus, Search, Filter } from 'lucide-react'
+import { useEffect, useState, useCallback } from 'react'
+import { Plus, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useProjectStore } from '@/store/projects'
-import { ProjectWithItems, ProjectType, ProjectStatus } from '@/types'
+import { ProjectType, ProjectStatus } from '@/types'
 import { CreateProjectDialog } from './create-project-dialog'
 
 export function ProjectList() {
-  const { projects, selectedProject, setSelectedProject, setProjects, isLoading } = useProjectStore()
+  const { projects, selectedProject, setSelectedProject, setProjects } = useProjectStore()
   const [searchTerm, setSearchTerm] = useState('')
   const [typeFilter, setTypeFilter] = useState<ProjectType | 'ALL'>('ALL')
   const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'ALL'>('ALL')
   const [showCreateDialog, setShowCreateDialog] = useState(false)
 
-  // Load projects on mount
-  useEffect(() => {
-    loadProjects()
-  }, [])
-
-  const loadProjects = async () => {
+  const loadProjects = useCallback(async () => {
     try {
       const response = await fetch('/api/projects')
       if (response.ok) {
@@ -33,7 +28,12 @@ export function ProjectList() {
     } catch (error) {
       console.error('Failed to load projects:', error)
     }
-  }
+  }, [setProjects])
+
+  // Load projects on mount
+  useEffect(() => {
+    loadProjects()
+  }, [loadProjects])
 
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

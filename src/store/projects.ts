@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ProjectWithItems, CreateProjectData, CreateProjectItemData, UpdateProjectData, UpdateProjectItemData } from '@/types'
+import { ProjectWithItems, ProjectItem } from '@/types'
 
 interface ProjectStore {
   projects: ProjectWithItems[]
@@ -13,14 +13,14 @@ interface ProjectStore {
   addProject: (project: ProjectWithItems) => void
   updateProject: (project: ProjectWithItems) => void
   deleteProject: (id: string) => void
-  addProjectItem: (projectId: string, item: any) => void
-  updateProjectItem: (projectId: string, item: any) => void
+  addProjectItem: (projectId: string, item: ProjectItem) => void
+  updateProjectItem: (projectId: string, item: ProjectItem) => void
   deleteProjectItem: (projectId: string, itemId: string) => void
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
 }
 
-export const useProjectStore = create<ProjectStore>((set, get) => ({
+export const useProjectStore = create<ProjectStore>((set) => ({
   projects: [],
   selectedProject: null,
   isLoading: false,

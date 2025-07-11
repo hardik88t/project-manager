@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { ExternalLink, Github, Plus, Edit, Trash2 } from 'lucide-react'
+import { ExternalLink, Github, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
+
 import { useProjectStore } from '@/store/projects'
-import { ProjectItemType, ItemStatus, Priority } from '@/types'
+
 import { CreateItemDialog } from './create-item-dialog'
 
 export function ProjectDetails() {
