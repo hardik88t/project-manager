@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id                  String         @id @default(cuid())
+  name                String
+  type                ProjectType
+  status              ProjectStatus  @default(PLANNING)
+  priority            Priority       @default(MEDIUM)
+  briefDescription    String
+  detailedDescription String?
+  liveUrl             String?
+  githubUrl           String?
+  localPath           String?        // Path within projects/ folder
+  techStack           String         // JSON array as string
+  tags                String         // JSON array as string
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  items               ProjectItem[]  // Features, bugs, improvements, etc.
+}
+
+model ProjectItem {
+  id          String           @id @default(cuid())
+  projectId   String
+  name        String
+  description String?
+  type        ProjectItemType  @default(FEATURE)
+  status      ItemStatus       @default(TODO)
+  priority    Priority         @default(MEDIUM)
+  labels      String           // JSON array as string
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+enum ProjectType {
+  WEBAPP
+  WEBSITE
+  CLI
+  BROWSER_EXTENSION
+  DESKTOP
+  MOBILE
+  API
+  AI_PROJECT
+  DEVOPS
+  CLONE
+  OTHER
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  COMPLETED
+  ON_HOLD
+  ARCHIVED
+}
+
+enum ProjectItemType {
+  FEATURE
+  BUG
+  IMPROVEMENT
+  TASK
+  RESEARCH
+  DOCUMENTATION
+}
+
+enum ItemStatus {
+  TODO
+  IN_PROGRESS
+  COMPLETED
+  BLOCKED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
