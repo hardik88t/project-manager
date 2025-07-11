@@ -1,24 +1,31 @@
 # 🚀 Project Manager
 
-A modern, full-stack project management webapp built with Next.js, TypeScript, and SQLite. Designed to manage and track development projects with features, bugs, improvements, and comprehensive metadata.
+## 📋 Project Overview
 
-## ✨ Features
+- **Type**: WEBAPP
+- **Tech Stack**: Next.js 15, TypeScript, SQLite, Prisma, Tailwind CSS, shadcn/ui
+- **Status**: ACTIVE
+- **Live URL**: Coming soon
+- **Repository**: [hardik88t/project-manager](https://github.com/hardik88t/project-manager)
 
-### 🎯 Core Functionality
-- **Two-Panel Interface**: Clean project list + detailed project view
-- **Project Management**: Create, read, update, delete projects with full metadata
-- **Item Tracking**: Manage features, bugs, improvements, tasks, research, and documentation
-- **Smart Filtering**: Filter by type, status, priority with real-time search
-- **Priority System**: LOW, MEDIUM, HIGH, URGENT priority levels
-- **Status Tracking**: Complete workflow from TODO to COMPLETED
+## 🎯 What This Project Does
 
-### 🛠️ Technical Features
-- **Modern Stack**: Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
-- **Database**: SQLite with Prisma ORM and automatic migrations
-- **State Management**: Zustand for efficient client-side state
-- **Validation**: Zod schemas for runtime type safety
-- **Responsive Design**: Works perfectly on desktop and tablet
-- **AI Integration Ready**: CLI-friendly database queries for AI assistance
+A modern, full-stack project management webapp designed to be the central hub for managing software development projects. It provides an intuitive interface to track everything from high-level features to granular tasks, bugs, and research notes, with developer-centric metadata like tech stack, priority, and repository links.
+
+## ✨ Key Features
+
+- [x] **Two-Panel Interface**: Clean project list + detailed project view
+- [x] **Project Management**: Create, read, update, delete projects with full metadata
+- [x] **Item Tracking**: Manage features, bugs, improvements, tasks, research, and documentation
+- [x] **Smart Filtering**: Filter by type, status, priority with real-time search
+- [x] **Priority System**: LOW, MEDIUM, HIGH, URGENT priority levels
+- [x] **Status Tracking**: Complete workflow from TODO to COMPLETED
+- [x] **Modern Stack**: Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
+- [x] **Database**: SQLite with Prisma ORM and automatic migrations
+- [x] **State Management**: Zustand for efficient client-side state
+- [x] **Validation**: Zod schemas for runtime type safety
+- [x] **Responsive Design**: Works perfectly on desktop and tablet
+- [x] **AI Integration Ready**: CLI-friendly database queries for AI assistance
 
 ## 🏗️ Tech Stack
 
@@ -216,6 +223,15 @@ This project is open source and available under the [MIT License](LICENSE).
 - **GitHub Repository**: [hardik88t/project-manager](https://github.com/hardik88t/project-manager)
 - **Live Demo**: Coming soon
 - **Documentation**: This README
+
+---
+
+## 📚 Development Documentation
+
+For development workflow, coding practices, and project management integration, see:
+- **[DEV.md](./DEV.md)** - Development guide and project manager integration
+- **[PLAN.md](./PLAN.md)** - Project planning and feature tracking
+- **[DEVLOG.md](./DEVLOG.md)** - Detailed development progress log
 
 ---
 
