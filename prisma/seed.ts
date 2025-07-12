@@ -5,9 +5,21 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Seeding database...')
 
+  // Create a default user
+  const user = await prisma.user.upsert({
+    where: { email: 'admin@example.com' },
+    update: {},
+    create: {
+      email: 'admin@example.com',
+      name: 'Admin User',
+      password: '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4tbQJQhK6u', // password: admin123
+    },
+  })
+
   // Create the actual project-manager project
   const projectManager = await prisma.project.create({
     data: {
+      userId: user.id,
       name: 'Project Manager',
       type: 'WEBAPP',
       status: 'ACTIVE',

@@ -1,10 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { createProjectSchema } from '@/lib/validations'
+import { getUserFromRequest } from '@/lib/auth'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const user = getUserFromRequest(request);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const projects = await prisma.project.findMany({
+      where: {
+        userId: user.userId
+      },
       include: {
         items: {
           orderBy: {
@@ -29,6 +41,14 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const user = getUserFromRequest(request);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json()
     
     // Validate the request body
@@ -37,6 +57,7 @@ export async function POST(request: NextRequest) {
     // Convert arrays to JSON strings for SQLite storage
     const projectData = {
       ...validatedData,
+      userId: user.userId,
       techStack: JSON.stringify(validatedData.techStack || []),
       tags: JSON.stringify(validatedData.tags || [])
     }
