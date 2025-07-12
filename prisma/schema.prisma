@@ -10,6 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String?
+  password          String
+  emailVerified     Boolean   @default(false)
+  verificationToken String?   @unique
+  resetToken        String?   @unique
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  projects          Project[]
+}
+
 model Project {
   id                  String         @id @default(cuid())
   name                String
@@ -25,6 +39,8 @@ model Project {
   tags                String         // JSON array as string
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
+  userId              String
+  user                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   items               ProjectItem[]  // Features, bugs, improvements, etc.
 }
 
