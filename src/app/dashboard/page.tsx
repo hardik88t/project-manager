@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { LogOut, User } from 'lucide-react';
 
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ id: string; email: string; name?: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -24,7 +24,7 @@ export default function Dashboard() {
 
     try {
       setUser(JSON.parse(userData));
-    } catch (error) {
+    } catch {
       router.push('/login');
       return;
     }

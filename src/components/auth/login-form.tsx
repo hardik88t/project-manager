@@ -41,7 +41,7 @@ export function LoginForm() {
 
       // Redirect to dashboard
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);
@@ -91,7 +91,7 @@ export function LoginForm() {
             </form>
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-600">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <a href="/signup" className="text-blue-600 hover:text-blue-500">
                   Sign up
                 </a>
