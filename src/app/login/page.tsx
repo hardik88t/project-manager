@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+import { LoginForm } from '@/components/auth/login-form';
+
+export default function LoginPage() {
+  return <LoginForm />;
+=======
 import LoginForm from '@/components/auth/LoginForm';
 
 export default function LoginPage() {
@@ -14,4 +20,5 @@ export default function LoginPage() {
       </div>
     </div>
   );
+>>>>>>> origin/main
 }

@@ -1,27 +1,23 @@
-'use client'
+'use client';
 
-import { ProjectList } from '@/components/project-list'
-import { ProjectDetails } from '@/components/project-details'
-import { Separator } from '@/components/ui/separator'
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/dashboard');
+    } else {
+      router.push('/login');
+    }
+  }, [router]);
+
   return (
-    <div className="flex h-screen">
-      {/* Left Panel - Project List */}
-      <div className="w-1/3 border-r bg-muted/10">
-        <div className="p-4 border-b">
-          <h1 className="text-2xl font-bold">Project Manager</h1>
-          <p className="text-sm text-muted-foreground">Manage and track your development projects</p>
-        </div>
-        <ProjectList />
-      </div>
-
-      <Separator orientation="vertical" />
-
-      {/* Right Panel - Project Details */}
-      <div className="flex-1">
-        <ProjectDetails />
-      </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-lg">Redirecting...</div>
     </div>
   );
 }

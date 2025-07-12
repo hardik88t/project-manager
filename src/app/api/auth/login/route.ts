@@ -1,5 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+<<<<<<< HEAD
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+const prisma = new PrismaClient();
+
+export async function POST(request: NextRequest) {
+  try {
+    const { email, password } = await request.json();
+
+    // Validate input
+    if (!email || !password) {
+      return NextResponse.json(
+        { error: 'Email and password are required' },
+        { status: 400 }
+      );
+    }
+
+    // Find user
+=======
 import { z } from 'zod';
 import { comparePassword, generateJWT } from '@/lib/auth';
 
@@ -16,12 +36,16 @@ export async function POST(request: NextRequest) {
     const { email, password } = loginSchema.parse(body);
 
     // Find user by email
+>>>>>>> origin/main
     const user = await prisma.user.findUnique({
       where: { email },
     });
 
     if (!user) {
       return NextResponse.json(
+<<<<<<< HEAD
+        { error: 'Invalid credentials' },
+=======
         { error: 'Invalid email or password' },
         { status: 401 }
       );
@@ -31,21 +55,47 @@ export async function POST(request: NextRequest) {
     if (!user.emailVerified) {
       return NextResponse.json(
         { error: 'Please verify your email address before logging in' },
+>>>>>>> origin/main
         { status: 401 }
       );
     }
 
     // Verify password
+<<<<<<< HEAD
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return NextResponse.json(
+        { error: 'Invalid credentials' },
+=======
     const isPasswordValid = await comparePassword(password, user.password);
 
     if (!isPasswordValid) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
+>>>>>>> origin/main
         { status: 401 }
       );
     }
 
     // Generate JWT token
+<<<<<<< HEAD
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET!,
+      { expiresIn: '7d' }
+    );
+
+    // Return user data (without password) and token
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _unused, ...userWithoutPassword } = user;
+
+    return NextResponse.json({
+      user: userWithoutPassword,
+      token,
+    });
+  } catch (error) {
+=======
     const token = generateJWT({
       userId: user.id,
       email: user.email,
@@ -81,6 +131,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+>>>>>>> origin/main
     console.error('Login error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

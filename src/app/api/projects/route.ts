@@ -1,22 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { createProjectSchema } from '@/lib/validations'
+import { getUserFromRequest } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
   try {
+<<<<<<< HEAD
+    const user = getUserFromRequest(request);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+=======
     // Get user ID from headers (set by middleware)
     const userId = request.headers.get('x-user-id');
     
     if (!userId) {
       return NextResponse.json(
         { error: 'Authentication required' },
+>>>>>>> origin/main
         { status: 401 }
       );
     }
 
     const projects = await prisma.project.findMany({
       where: {
+<<<<<<< HEAD
+        userId: user.userId
+=======
         userId: userId
+>>>>>>> origin/main
       },
       include: {
         items: {
@@ -42,12 +54,19 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+<<<<<<< HEAD
+    const user = getUserFromRequest(request);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+=======
     // Get user ID from headers (set by middleware)
     const userId = request.headers.get('x-user-id');
     
     if (!userId) {
       return NextResponse.json(
         { error: 'Authentication required' },
+>>>>>>> origin/main
         { status: 401 }
       );
     }
@@ -60,7 +79,11 @@ export async function POST(request: NextRequest) {
     // Convert arrays to JSON strings for SQLite storage
     const projectData = {
       ...validatedData,
+<<<<<<< HEAD
+      userId: user.userId,
+=======
       userId: userId,
+>>>>>>> origin/main
       techStack: JSON.stringify(validatedData.techStack || []),
       tags: JSON.stringify(validatedData.tags || [])
     }

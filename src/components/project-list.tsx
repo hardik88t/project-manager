@@ -20,10 +20,23 @@ export function ProjectList() {
 
   const loadProjects = useCallback(async () => {
     try {
-      const response = await fetch('/api/projects')
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch('/api/projects', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       if (response.ok) {
         const data = await response.json()
         setProjects(data)
+      } else if (response.status === 401) {
+        // Redirect to login if unauthorized
+        window.location.href = '/login';
       }
     } catch (error) {
       console.error('Failed to load projects:', error)

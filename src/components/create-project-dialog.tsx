@@ -55,10 +55,16 @@ export function CreateProjectDialog({ open, onOpenChange, onProjectCreated }: Cr
       const validatedData = createProjectSchema.parse(projectData)
 
       // Submit to API
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
       const response = await fetch('/api/projects', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(validatedData)
       })

@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+import { SignupForm } from '@/components/auth/signup-form';
+
+export default function SignupPage() {
+  return <SignupForm />;
+=======
 import SignupForm from '@/components/auth/SignupForm';
 
 export default function SignupPage() {
@@ -14,4 +20,5 @@ export default function SignupPage() {
       </div>
     </div>
   );
+>>>>>>> origin/main
 }
