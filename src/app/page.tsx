@@ -8,7 +8,7 @@ import { useAuthStore } from '@/store/auth'
 
 export default function LandingPage() {
   const router = useRouter()
-  const { user, checkAuth, isLoading } = useAuthStore()
+  const { user, checkAuth } = useAuthStore()
 
   useEffect(() => {
     checkAuth()

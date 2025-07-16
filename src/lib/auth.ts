@@ -31,7 +31,7 @@ export function generateToken(payload: JWTPayload): string {
 export function verifyToken(token: string): JWTPayload | null {
   try {
     return jwt.verify(token, JWT_SECRET) as JWTPayload
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -54,7 +54,7 @@ export async function getUserFromToken(token: string) {
       }
     })
     return user
-  } catch (error) {
+  } catch {
     return null
   }
 }
@@ -98,7 +98,8 @@ export async function authenticateUser(usernameOrEmail: string, password: string
     }
 
     // Return user without password
-    const { password: _, ...userWithoutPassword } = user
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: userPassword, ...userWithoutPassword } = user
     return userWithoutPassword
   } catch (error) {
     console.error('Authentication error:', error)

@@ -9,6 +9,35 @@ This guide covers:
 
 **⚠️ Important**: Update this DEV.md file regularly as your project evolves. Add project-specific practices, tools, and workflows that are unique to your tech stack.
 
+## 🚀 Essential Development Practices
+
+### Build Verification (CRITICAL)
+
+**Always run build before committing or deploying:**
+
+```bash
+npm run build
+```
+
+**Why this is critical:**
+- Catches TypeScript errors that dev mode might miss
+- Identifies ESLint issues that prevent production builds
+- Validates static generation and SSR compatibility
+- Ensures all imports and dependencies are correctly resolved
+- Prevents deployment failures and production issues
+
+**Common build issues and fixes:**
+- **Unused variables**: Remove or prefix with underscore `_variable`
+- **Missing Suspense boundaries**: Wrap `useSearchParams()` and similar hooks in `<Suspense>`
+- **Type errors**: Fix TypeScript type mismatches
+- **Import errors**: Verify all imports are correct and dependencies installed
+
+**Build check workflow:**
+1. Run `npm run build` before every commit
+2. Fix any errors or warnings
+3. Test the built application with `npm start`
+4. Only then commit and deploy
+
 ## 🔗 Project Manager Integration
 
 ### Database Schema (Key Tables)
@@ -254,6 +283,56 @@ Document your deployment workflow:
 - Rollback procedures
 - Monitoring setup
 ```
+
+### Build Issues & Solutions (Vibin-Specific)
+
+**Common build errors encountered and their fixes:**
+
+1. **Unused variables error**:
+   ```typescript
+   // ❌ Error: 'router' is assigned a value but never used
+   const router = useRouter()
+
+   // ✅ Fix: Remove unused import/variable
+   // Remove the line if not needed
+   ```
+
+2. **useSearchParams() Suspense boundary error**:
+   ```typescript
+   // ❌ Error: useSearchParams() should be wrapped in suspense boundary
+   export default function LoginPage() {
+     const searchParams = useSearchParams()
+     // ...
+   }
+
+   // ✅ Fix: Wrap in Suspense
+   export default function LoginPage() {
+     return (
+       <Suspense fallback={<div>Loading...</div>}>
+         <LoginForm />
+       </Suspense>
+     )
+   }
+   ```
+
+3. **Zod error property mismatch**:
+   ```typescript
+   // ❌ Error: Property 'errors' does not exist on type 'ZodError'
+   error.errors
+
+   // ✅ Fix: Use 'issues' instead
+   error.issues
+   ```
+
+4. **Password destructuring with unused variable**:
+   ```typescript
+   // ❌ Error: '_' is assigned a value but never used
+   const { password: _, ...user } = userData
+
+   // ✅ Fix: Use eslint-disable or meaningful name
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   const { password: userPassword, ...user } = userData
+   ```
 
 ---
 

@@ -65,7 +65,7 @@ export const useAuthStore = create<AuthStore>()(
           })
 
           return true
-        } catch (error) {
+        } catch {
           set({
             error: 'Network error. Please try again.',
             isLoading: false
