@@ -1,40 +1,62 @@
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
 async function main() {
   console.log('🌱 Seeding database...')
 
-  // Create the actual project-manager project
-  const projectManager = await prisma.project.create({
+  // Create default user
+  const hashedPassword = await bcrypt.hash('admin123', 12)
+
+  const defaultUser = await prisma.user.upsert({
+    where: { username: 'admin' },
+    update: {},
+    create: {
+      username: 'admin',
+      email: 'admin@avinya.it',
+      name: 'Administrator',
+      password: hashedPassword
+    }
+  })
+
+  console.log('✅ Created default user:')
+  console.log(`- Username: admin`)
+  console.log(`- Password: admin123`)
+  console.log(`- Email: admin@avinya.it`)
+
+  // Create the Vibin project
+  const vibinProject = await prisma.project.create({
     data: {
-      name: 'Project Manager',
+      name: 'Vibin',
       type: 'WEBAPP',
       status: 'ACTIVE',
       priority: 'HIGH',
-      briefDescription: 'A Next.js project management webapp to track and manage development projects',
-      detailedDescription: 'This is the current project - a comprehensive project management system built with Next.js, TypeScript, Prisma, and shadcn/ui. It allows tracking of projects with features, bugs, improvements, and other items.',
+      briefDescription: 'A Next.js vibe coding tool with AI integration for project management',
+      detailedDescription: 'Vibin is the ultimate vibe coding tool with AI integration. Built with Next.js, TypeScript, Prisma, and shadcn/ui, it helps developers manage projects, track progress, and stay in the flow with intelligent assistance.',
       githubUrl: 'https://github.com/hardik88t/project-manager',
-      localPath: 'project-manager',
-      techStack: JSON.stringify(['Next.js 15', 'TypeScript', 'Prisma', 'SQLite', 'shadcn/ui', 'Tailwind CSS', 'Zustand', 'Zod']),
-      tags: JSON.stringify(['project-management', 'webapp', 'nextjs', 'typescript', 'prisma']),
+      liveUrl: 'https://vibin.avinya.it',
+      localPath: 'vibin',
+      userId: defaultUser.id, // Associate with default user
+      techStack: JSON.stringify(['Next.js 15', 'TypeScript', 'Prisma', 'PostgreSQL', 'shadcn/ui', 'Tailwind CSS', 'Zustand', 'Zod', 'AI Integration']),
+      tags: JSON.stringify(['vibin', 'ai-integration', 'project-management', 'webapp', 'nextjs', 'typescript', 'coding-tool']),
       items: {
         create: [
           {
-            name: 'Remove dummy data and add actual project data',
-            description: 'Clean up seed file to only contain real project-manager data',
-            type: 'TASK',
+            name: 'Implement authentication system',
+            description: 'Add user authentication with login, protected routes, and user management',
+            type: 'FEATURE',
             status: 'COMPLETED',
             priority: 'HIGH',
-            labels: JSON.stringify(['cleanup', 'data', 'seed'])
+            labels: JSON.stringify(['authentication', 'security', 'login'])
           },
           {
-            name: 'Add search functionality',
-            description: 'Implement advanced search across projects and items',
+            name: 'Add AI integration features',
+            description: 'Implement AI-powered coding assistance and project insights',
             type: 'FEATURE',
             status: 'TODO',
-            priority: 'MEDIUM',
-            labels: JSON.stringify(['search', 'ui', 'enhancement'])
+            priority: 'HIGH',
+            labels: JSON.stringify(['ai', 'integration', 'assistance'])
           },
           {
             name: 'Fix responsive layout on mobile',
@@ -77,7 +99,7 @@ async function main() {
 
   console.log('✅ Database seeded successfully!')
   console.log(`Created project:`)
-  console.log(`- ${projectManager.name}`)
+  console.log(`- ${vibinProject.name}`)
 
   // Count total items
   const totalItems = await prisma.projectItem.count()

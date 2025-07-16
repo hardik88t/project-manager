@@ -1,19 +1,20 @@
-# 🚀 Project Manager
+# 🚀 Vibin
 
 ## 📋 Project Overview
 
 - **Type**: WEBAPP
 - **Tech Stack**: Next.js 15, TypeScript, PostgreSQL (Cloud), Prisma, Tailwind CSS, shadcn/ui
 - **Status**: ACTIVE
-- **Live URL**: Coming soon
+- **Live URL**: [vibin.avinya.it](https://vibin.avinya.it)
 - **Repository**: [hardik88t/project-manager](https://github.com/hardik88t/project-manager)
 
-## 🎯 What This Project Does
+## 🎯 What Vibin Does
 
-A modern, full-stack project management webapp designed to be the central hub for managing software development projects. It provides an intuitive interface to track everything from high-level features to granular tasks, bugs, and research notes, with developer-centric metadata like tech stack, priority, and repository links.
+Vibin is your ultimate vibe coding tool with AI integration. A modern, full-stack project management webapp designed to help developers stay in the flow while managing their projects. It provides an intuitive interface to track everything from high-level features to granular tasks, bugs, and research notes, with AI-powered insights and developer-centric metadata.
 
 ## ✨ Key Features
 
+- [x] **Authentication System**: Secure login with JWT tokens and protected routes
 - [x] **Two-Panel Interface**: Clean project list + detailed project view
 - [x] **Project Management**: Create, read, update, delete projects with full metadata
 - [x] **Item Tracking**: Manage features, bugs, improvements, tasks, research, and documentation
@@ -21,11 +22,12 @@ A modern, full-stack project management webapp designed to be the central hub fo
 - [x] **Priority System**: LOW, MEDIUM, HIGH, URGENT priority levels
 - [x] **Status Tracking**: Complete workflow from TODO to COMPLETED
 - [x] **Modern Stack**: Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
-- [x] **Database**: SQLite with Prisma ORM and automatic migrations
+- [x] **Database**: PostgreSQL with Prisma ORM and automatic migrations
 - [x] **State Management**: Zustand for efficient client-side state
 - [x] **Validation**: Zod schemas for runtime type safety
 - [x] **Responsive Design**: Works perfectly on desktop and tablet
-- [x] **AI Integration Ready**: CLI-friendly database queries for AI assistance
+- [x] **AI Integration Ready**: Built for future AI-powered coding assistance
+- [x] **Vibe Coding**: Designed to keep developers in the flow
 
 ## 🏗️ Tech Stack
 

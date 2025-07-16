@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Project Manager",
-  description: "Manage and track all your development projects",
+  title: "Vibin - Vibe Coding Tool with AI Integration",
+  description: "Your ultimate vibe coding tool with AI integration. Manage projects, track progress, and stay in the flow.",
 };
 
 export default function RootLayout({
