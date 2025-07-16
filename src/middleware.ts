@@ -3,8 +3,9 @@ import type { NextRequest } from 'next/server'
 import { getTokenFromRequest, verifyToken } from './lib/auth'
 
 // Define protected routes
-const protectedRoutes = ['/manager', '/api/projects']
+const protectedRoutes = ['/manager', '/dashboard', '/api/projects']
 const authRoutes = ['/login']
+const publicRoutes = ['/'] // Home page is now public
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -12,13 +13,18 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = token && verifyToken(token)
 
   // Check if the current route is protected
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const isProtectedRoute = protectedRoutes.some(route =>
     pathname.startsWith(route)
   )
 
   // Check if the current route is an auth route (login)
-  const isAuthRoute = authRoutes.some(route => 
+  const isAuthRoute = authRoutes.some(route =>
     pathname.startsWith(route)
+  )
+
+  // Check if the current route is public
+  const isPublicRoute = publicRoutes.some(route =>
+    pathname === route || pathname.startsWith(route + '/')
   )
 
   // If user is not authenticated and trying to access protected route
@@ -28,10 +34,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // If user is authenticated and trying to access auth routes, redirect to home
-  if (isAuthRoute && isAuthenticated) {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
+  // Don't redirect authenticated users away from login page - let them access it
+  // This allows them to see the login form even if already authenticated
+  // The login page itself will handle the redirect logic
 
   return NextResponse.next()
 }

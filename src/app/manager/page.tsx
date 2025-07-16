@@ -52,7 +52,7 @@ export default function ManagerPage() {
       <div className="w-1/3 border-r bg-muted/10">
         <div className="p-4 border-b">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-2xl font-bold">Project Manager</h1>
+            <h1 className="text-2xl font-bold">Vibin Manager</h1>
             <div className="flex gap-2">
               <Button onClick={handleGoHome} variant="outline" size="sm">
                 Home
@@ -63,7 +63,7 @@ export default function ManagerPage() {
             </div>
           </div>
           <p className="text-sm text-muted-foreground">
-            Manage and track your development projects
+            Manage and track your development projects with AI-powered insights
           </p>
           <p className="text-xs text-muted-foreground mt-1">
             Logged in as: {user.name || user.username}

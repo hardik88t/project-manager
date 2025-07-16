@@ -1,7 +1,9 @@
 {
-  "name": "project-manager",
+  "name": "vibin",
   "version": "0.1.0",
   "private": true,
+  "description": "Your ultimate vibe coding tool with AI integration",
+  "homepage": "https://vibin.avinya.it",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
