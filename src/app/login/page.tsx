@@ -20,16 +20,18 @@ export default function LoginPage() {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      router.push(redirectTo)
+      window.location.href = redirectTo
     }
-  }, [user, router, redirectTo])
+  }, [user, redirectTo])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     const success = await login(usernameOrEmail, password)
+
     if (success) {
-      router.push(redirectTo)
+      // Use window.location.href for a hard redirect to ensure it works
+      window.location.href = redirectTo
     }
   }
 

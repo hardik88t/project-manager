@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthStore>()(
 
       login: async (usernameOrEmail: string, password: string) => {
         set({ isLoading: true, error: null })
-        
+
         try {
           const response = await fetch('/api/auth/login', {
             method: 'POST',
