@@ -1,9 +1,29 @@
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
 async function main() {
   console.log('🌱 Seeding database...')
+
+  // Create default user
+  const hashedPassword = await bcrypt.hash('admin123', 12)
+
+  const defaultUser = await prisma.user.upsert({
+    where: { username: 'admin' },
+    update: {},
+    create: {
+      username: 'admin',
+      email: 'admin@avinya.it',
+      name: 'Administrator',
+      password: hashedPassword
+    }
+  })
+
+  console.log('✅ Created default user:')
+  console.log(`- Username: admin`)
+  console.log(`- Password: admin123`)
+  console.log(`- Email: admin@avinya.it`)
 
   // Create the actual project-manager project
   const projectManager = await prisma.project.create({
@@ -16,7 +36,8 @@ async function main() {
       detailedDescription: 'This is the current project - a comprehensive project management system built with Next.js, TypeScript, Prisma, and shadcn/ui. It allows tracking of projects with features, bugs, improvements, and other items.',
       githubUrl: 'https://github.com/hardik88t/project-manager',
       localPath: 'project-manager',
-      techStack: JSON.stringify(['Next.js 15', 'TypeScript', 'Prisma', 'SQLite', 'shadcn/ui', 'Tailwind CSS', 'Zustand', 'Zod']),
+      userId: defaultUser.id, // Associate with default user
+      techStack: JSON.stringify(['Next.js 15', 'TypeScript', 'Prisma', 'PostgreSQL', 'shadcn/ui', 'Tailwind CSS', 'Zustand', 'Zod']),
       tags: JSON.stringify(['project-management', 'webapp', 'nextjs', 'typescript', 'prisma']),
       items: {
         create: [
